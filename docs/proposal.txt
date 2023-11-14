@@ -1,0 +1,76 @@
+zzt：
+1. Basic HTTP Service (10%?) ok
+Status code:
+20x,30x,40x,50x 什么时候返回对应的code？刚上来可能有点闷，这些都在下面才有说明，可能需要说明一下需要严格遵循文档下面具体说明。
+还有是仅仅返回报文？还是需要有html页面说明这个status code？
+request和response报文格式？比方说header哪些字段是必要的。可能需要定义一个严格的格式？
+2. View and Download (20%?) ok
+The corresponding headers including Content-type and content-length should be correctly derived by the file.
+这里的Content-type可能涉及到mimetype，最好附一个链接RFC文档之类的？https://www.iana.org/assignments/media-types/media-types.xhtml
+
+3. Upload, Delete Files with Authorization Management (25%?)
+Authorization (5%)
+Providing a register interface for client指自己写一个html页面吗？所有文档里提到的这个interface不知道具体是什么意思。(概念)
+the server will response with message "Username already exists!"，以什么形式返回？页面？弹窗警告？
+其他错误处理，包括不限于：非法输入，比如空白表单POST？
+Upload File (10%)
+If there is no authorization information inside the HTTP request：这个authorization是自己加到header里面的吗？和前文Register: {usr: [your_username], pwd: [your_password]}差不多，变成Authorization: {usr: [your_username], pwd: [your_password]}吗？这里可能没说明白。
+4. Cookies and Session (10%?)
+这张图好像有点怪。文字说明比较清楚，刚上来看图有点不理解。应该是分三种情况画？
+第一种是：初次登陆，server给client发送带set-cookie header的response
+第二种是：在expiration内使用session-id登录。
+第三种是：已经expired了，然后server需要用户重新用用户名密码登录？好像具体处理也没有说明？
+5. Chunked Transfer (10%?)
+You should provide another file-accessing interface that when user send GET request to use chunked encoding to transfer files, then the header Transfer-Encoding: chunked explains that this transmission is a chunk of the complete large file. 这里是不是要说明一下Transfer-Encoding: chunked是在response里的？
+
+是否提供整体框架？感觉功能需求上说的已经比较清楚，但是细节上有很多比较模糊的点。还有部分语言描述上有点小语法错误。以上是我自己第一次阅读文档的感受。
+
+
+ww老师：
+1. basic http server（15%）
+1.1 要支持对 3种请求对应的所有响应？ 还是只测试 server 能够接收（功能1 socket通信）并识别（功能2 解包）3种 请求，并作出简单的（比如200）的应答消息（功能3 封包 -》这部分因为是实现整个http server的基础，因此不设置分值（？）
+1.2 编号5xx的响应场景属于要实现的功能吗，没有的话建议文档中做必要说明-》说明了是may need to support，没有明确说明，可能需要考虑502 service unavailable，看目前测试。。。
+
+2. persistent connect（10%）  没有标号
+2.1从task看，with  the ability to handle multiple requests in a single connection
+这里的 多个请求是串行过来（前一次请求的应答收到后在发起下一次请求）的对吗，不是pipeline也不是并行-》对的，只是在一个connection中串行处理个请求即可，已修改（sequentially这个词对吗）
+
+3. Authorization (5%)  没有标号
+3.1 server是否需要对client发送的加密信息是否使用base64 encoding 做判断？-》可以不需要，直接参考http basic authorization，除非相同的信息通过不同的加密能得到同样的结果（？）
+3.2 最后一句话：The services of the following part all require authorization
+是指从 文章中后续所有的服务都需要先做认证吗（包括查看view？） 测试用例是这样的吗？那如果学生代码里
+不支持Authorization ，其他的测试还能开展吗 -》应该是，view，download，upload，delete都需要认证
+
+4. View and Download 20%
+4.1（2. View and Download 20%） 题中标号为2，但实际已经是 基础部分的第4部分了
+4.2 相对路径的描述比较长，是否可以在文中举一个相对路径的例子（含 具体位置关系 以及 对应的 url）-》例子可能有，但是描述的复杂了点？
+4.3 file-getting interface  一直没太明白这个单词的意思，请问是翻译过来的 还是 专业名词 -》改成api
+
+5. Upload and Delete Files (20%)
+5.1 （3. Upload and Delete Files (20%) ）题中标号为3，但实际已经是 基础部分的第5部分了
+5.2  该部分有如下描述（In this part, you are required to implement the uploading and deleting service with
+authorization） 但 第4部分没有，和 第3部分的最后一句话（上述3.2 ）是冲突的 -》可能是之前upload delete和authorization写一块了没删干净。。。
+5.3 再次看到 interface（Task: Implement a HTTP file uploading interface for client） 可能理解不一样，我对interface
+的理解是接口，比如一种编程框架提供了某个接口可以直接使用，比如 client使用一个接口来使用某种功能，
+但我们题目要实现的是server，应该是 server为client提供某种服务（），而不是由client调用接口来实现这个服务，client
+在交互过程中始终只做指定的http的几种动作 -》参考上面
+
+6.  Cookies and Session (10%?)
+6.1 （4. Cookies and Session (10%?) ）题中标号为4，但实际已经是 基础部分的第6部分了
+6.2  cookies 本身除了和用户相关，还有其他的比如 path 的子属性，比如不同的目录可能关联到同一个用户的不同cookies，我们题目中没有这个子属性，对吗-》对，实际上只要求cookie中的session-id字段，已添加说明
+6.3  Also this session-id will become expired if the user doesn't login again in a certain period of time
+这里的 a certain period of time 具体时间有要求吗，没有要求的话到时测试用例来如何判断是否到时间要过期？-》加了句：测试时会有具体要求，要求测试时sessionid的expiration time设置为10s
+6.4 关于cookie 的描述（ Typically, an HTTP cookie is used to tell if two requests come from the same
+browser） 应该是 对用判断是否来自同一个用户，而不是同一个浏览器吧 ？-》 是的，已改
+
+continue
+1.  文档中没有提到不能使用哪些python包，所以是不是可以理解为本次project 不限制使用python包 ？  如果有限制的话，应该在文档里做说明 -》有的，这部分想等fzx稍微整理一下，放在requirements了，还可以看看有什么问题
+2. bonus中 加密的这部分 加解密的步骤写的很清楚，提到了 客户端和服务器端都需要实现， 但加解密的算法没有涉及，这一点是由学生自由发挥吗，如果要拿到这一部分的分数，要同时完成客户端和服务器端？ 然后通过哪种方式来验证做了相应的加解密呢（如何评分，是否从分数上区分不同的加解密做法？-》需要加上说明，可以使用其他算法，只要是非对称与对称就行，评分：答辩时进行介绍或演示
+
+3. 并行处理我个人支持放到基础分-》已修改：support many clients in basic part
+4. chunked transfer 这部分放到bonus ？-》就还是basic吧
+这部分的描述是比较详细的，但可能我的理解还是不到位，如果我们的参考代码已经实现了，是否方便贴一个该场景下的抓包分析上来，是否更能说明要做成什么样呢（这个功能在课件里的描述也很抽象）
+
+5. 最后的 other 部分，这部分我们的预期是如何给分呢-》根据创意和难度给分
+5.1 使用除tcp外的其他传输层协议，换一个传输层协议对应的socket 要实现 http的哪些功能呢， 如何做区分
+5.2 修改 http的实现，具体是？http 2.0 ， 3.0  还是完全不同的实现？  评分上如何区分呢
