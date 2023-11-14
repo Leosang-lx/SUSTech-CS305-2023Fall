@@ -2,10 +2,9 @@
 
 **Semester: 2023 Fall**
 
-**Last Update: 2023/11/13**
+**Last Update: 2023/11/14**
 
-**Submit deadline: 2023/12/31**
-
+**Submit deadline: 2023/12/31 23:59:59**
 
 
 
@@ -370,4 +369,4 @@ We will grade your work based on the content of slides, so you should try to inc
 
 ## Submission
 
-You should submit your code in a `CS305_SID1_SID2.zip` file (with SIDs of each member) to the blackboard site before the deadline deadline **2023/12/31 23:59:59**. And please **pay attention again** that there should be a `server.py` in the root directory of your project. And we will start your server by running `python server.py -i localhost -p 8080` (for example), thus you should use `arparse` to support passing parameters in terminal. **Late submission is not allowed**, so please submit ahead of the deadline.
+How to submit: You should compress your code in your **code** into one **zip** file named `CS305_SID ` following the SIDs of your group members, e.g. `CS305_12110001_12110002.zip`, and submit to the blackboard site before the deadline **2023/12/31 23:59:59**. And please **pay attention again** that there should be a `server.py` in the root directory of your project. And we will start your server by running `python server.py -i localhost -p 8080` (for example), thus you should use `arparse` to support passing parameters in terminal.
