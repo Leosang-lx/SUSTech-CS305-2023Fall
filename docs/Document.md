@@ -2,9 +2,14 @@
 
 **Semester: 2023 Fall**
 
-**Last Update: 2023/11/14**
-
 **Submit deadline: 2023/12/31 23:59:59**
+
+**Last Update: 2023/11/22**
+
+> Update log:
+>
+> - Score composition of each part
+> - Requirement of section "5. Chunked Transfer"
 
 
 
@@ -34,7 +39,7 @@ If you have questions, feel free to contact us, or raise questions in [Issues SU
 
 
 
-## Basic Part (75%)
+## Basic Part (80%)
 
 In the basic part, you are required to implement the **server side** of the HTTP file manager, and provide service APIs for clients to view a directory, download files, upload files and delete files. To begin your project, you should firstly build your HTTP service framework, so that your server can **accept and maintain the connections from clients**, **parse the received HTTP packets**, and **recognize users through authorization information**. Then for the task required in the following sections, your server should correctly provide corresponding response/service according to the request target from client.
 
@@ -235,7 +240,11 @@ Reference: [RFC 9112: HTTP/1.1 Chunked-transfer](https://www.rfc-editor.org/rfc/
 
 Chunked transfer encoding is a streaming data transfer mechanism of HTTP/1.1. Instead of using header `Content-Length`, sender can send data in chunks, which is useful when the total size of the response may not be known until the request has been fully processed, such as transmitting dynamic content.
 
-**Task**: You should provide **another file-downloading API** (instead of the one in "2. View and Download") that when user send **GET** request to `http://localhost:8080/chunked?path=[request_path]`, use chunked encoding to transfer files, then the header in HTTP response `Transfer-Encoding: chunked` explains that this transmission is a chunk of the complete large file. Each chunk contains a chunk length at the start of the chunk following a `CRLF` and the corresponding chunk data following the other `CRLF`. Then a number zero with two following `CRLF` implies the **end of the chunked transfer**. Also, server should return **200 OK**. The structure of chunked transfer is shown below:
+**Task**: Your server should support chunked-transfer under the **same API as the basic part "2. View and Download"**. If client assigns query parameter `chunked=1` in a URL of **GET** request, your server should transfer the request data in chunks.
+
+For example, when user sends **GET** request to `https://localhost:8080/12110104/wtf.txt?chunked=1`, server should use chunked encoding to transfer file content. Then the header in HTTP response `Transfer-Encoding: chunked` explains that this transmission is a chunk of the complete large file. Each chunk contains a chunk length at the start of the chunk following a `CRLF` and the corresponding chunk data following the other `CRLF`. Then a number zero with two following `CRLF` implies the **end** of the chunked transfer. Also, server should return **200 OK**. Besides, you should also handle the **requests without authorization or permission** the same as stated in above sections.
+
+The structure of chunked transfer is shown below:
 
 Body format:
 
@@ -255,7 +264,7 @@ Body format:
 
 
 
-## Bonus Part (Max 25%)
+## Bonus Part (Max 30%)
 
 
 
@@ -321,7 +330,7 @@ The speed test mainly consists of large file downloading with one client, and sm
 
 
 
-### Encryption (5%)
+### Encryption (10%)
 
 The above implementations are still plaintext transmission for all information, thus there exists risk of information leakage and tampering. SSL/TLS are introduced to provide secure transmission. With asymmetric encryption (e.g. RSA algorithm), a client can first obtain public key from server, then sends data encrypted through the public key to server. Then server will use the private key to decrypt the data and continue to analyze the HTTP packet.
 
