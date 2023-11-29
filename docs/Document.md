@@ -4,9 +4,13 @@
 
 **Submit deadline: 2023/12/31 23:59:59**
 
-**Last Update: 2023/11/22**
+**Last Update: 2023/11/29**
 
-> Update log:
+> Update log 2023/11/29:
+>
+> - Add invalid cases requirement in sections "3.1 Upload" and "3.2 Delete"
+>
+> Update log 2023/11/22:
 >
 > - Score composition of each part
 > - Requirement of section "5. Chunked Transfer"
@@ -194,6 +198,7 @@ Each user will have their own user directory named by their **username** on the 
 
 You should properly handle **invalid** requests like the following cases (for cases of user "11912113"):
 
+- If the required query parameter `path=xxx` is not provided, server should return **400 Bad Request**.
 - If there is no authorization information inside the HTTP request, or the authorization is invalid for server to accept, server should return **401 Unauthorized**.
 - If the authorization information is not the user "11912113", this request is also **invalid** since there is no permission for other user to upload file to `/data/11912113/`, and server should return **403 Forbidden**.
 - If the target directory to upload file to does not exist in the server, the server should return **404 Not Found**.
@@ -209,6 +214,7 @@ Same as file-uploading, each user can only delete files under their user directo
 
 You should properly handle invalid requests like the following cases (also for the cases of user "11912113"):
 
+- If the required query parameter `path=xxx` is not provided, server should return **400 Bad Request**.
 - If there is no authorization information inside the HTTP request, or the authorization is invalid for server to accept, server should return **401 Unauthorized**.
 - If the authorization information is not the user "11912113", this request is also **invalid** since there is no permission for other user to delete files in `/data/11912113/`, and server should return **403 Forbidden**.
 - If the target directory to upload file to does not exist in the server, the server should return **404 Not Found**.
