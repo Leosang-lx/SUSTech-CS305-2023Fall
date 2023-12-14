@@ -1,8 +1,15 @@
 # Update Log
 
-**Last Update: 2023/12/06**
+**Last Update: 2023/12/13**
 
 
+
+Tip: the detailed requirements of **presentation** will be updated after our discussion in the following weeks.
+
+Update on 2023/12/13:
+
+- Modify description of query parameter `SUSTech-HTTP` as **optional** in section "2. View and Download"
+- Add brief requirements of presentation in section "Encryption"
 
 Update on 2023/12/6:
 
