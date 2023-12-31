@@ -6,7 +6,7 @@
 
 **Last Update: 2023/12/13**
 
-[(Refer to update log)]([Leosang-lx/SUSTech-CS305-2023Fall: The repository for SUSTech-CS305-2023Fall course project (github.com)](https://github.com/Leosang-lx/SUSTech-CS305-2023Fall))
+[(Refer to update log)](https://github.com/Leosang-lx/SUSTech-CS305-2023Fall)
 
 
 
