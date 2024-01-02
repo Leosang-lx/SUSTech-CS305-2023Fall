@@ -6,7 +6,7 @@ Add contributions and grading adjustment
 
 ### Contributions and Grading Adjustment
 
-The score of a certain group is $S$, with the contributions of each member $\{c_1,c_2\}$ for two-member group and $\{c_1,c_2,c_3\}$ for three-member group.
+The score of a certain group is $S$, with the contributions of each member $\{c_1,c_2\}$ for 2-member group and $\{c_1,c_2,c_3\}$ for 3-member group.
 
 Consider $c_1\leq c_2\leq c_3$:
 
