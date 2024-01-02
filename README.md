@@ -1,6 +1,16 @@
 # Update Log
 
-**Last Update: 2023/12/13**
+**Last Update: 2024/01/02**
+
+Add contributions and grading adjustment
+
+### Contributions and Grading Adjustment
+
+The score of a certain group is $S$, with the contributions of each member $\{c_1,c_2\}$ for two-member group and $\{c_1,c_2,c_3\}$ for three-member group.
+
+Consider $c_1\leq c_2\leq c_3$:
+
+Then member $i,i\in[n]$, his/her score will be multiplied by a allocation rate $\mu$, which is the ratio of **this person's contribution rate** $c_i$ to the **average of all equal and higher contribution rates** in the group $\textbf{s}=\{c_j\},(j\in[n]\and c_j>c_i)$, that is: $\mu=\frac{c_i}{\text{avg}(\textbf{s})}$, and the score after adjustment is $S'=\mu S$
 
 
 
